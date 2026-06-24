@@ -30,7 +30,7 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-app.options("*", cors(corsOptions)); // ← let cors() handle preflight, not your manual handler
+app.options("/*", cors(corsOptions)); // ← use "/*" not "*"// ← let cors() handle preflight, not your manual handler
 
 app.use(express.json());
 app.use(cookieParser());
