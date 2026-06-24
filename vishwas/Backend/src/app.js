@@ -42,7 +42,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 // ✅ FIX PRE-FLIGHT REQUESTS (IMPORTANT)
-app.options("*", cors(corsOptions));
+app.options("/*", cors(corsOptions));
 
 // ================= ROUTES =================
 const authRouter = require("./routes/auth.routes");
