@@ -4,36 +4,39 @@ const cors = require("cors");
 
 const app = express();
 
-// Middlewares
 app.use(express.json());
 app.use(cookieParser());
 
-// ✅ FRONTEND URLS (IMPORTANT)
+// ✅ CLEAN ORIGINS
 const allowedOrigins = [
   "http://localhost:5173",
   "https://vishwas-project-final.vercel.app",
   "https://vishwas-six.vercel.app"
 ];
 
-// ✅ CORS CONFIG (PRODUCTION SAFE)
-app.use(cors({
+// ✅ CORS SETUP
+const corsOptions = {
   origin: function (origin, callback) {
-    // allow mobile apps / postman / server-to-server
+    // allow Postman / server-to-server
     if (!origin) return callback(null, true);
 
     if (allowedOrigins.includes(origin)) {
       return callback(null, true);
     }
 
-    return callback(new Error("Not allowed by CORS"));
+    console.log("❌ Blocked CORS:", origin);
+    return callback(null, false);
   },
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"]
-}));
+};
 
-// ✅ preflight requests fix
-app.options("*", cors());
+// apply CORS globally
+app.use(cors(corsOptions));
+
+// preflight
+app.options("*", cors(corsOptions));
 
 // Routes
 const authRouter = require("./routes/auth.routes");
