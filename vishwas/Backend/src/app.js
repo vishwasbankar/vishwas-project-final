@@ -4,25 +4,38 @@ const cors = require("cors");
 
 const app = express();
 
+// Middlewares
 app.use(express.json());
 app.use(cookieParser());
 
+// ✅ FRONTEND URLS (IMPORTANT)
 const allowedOrigins = [
   "http://localhost:5173",
+  "https://vishwas-project-final.vercel.app",
   "https://vishwas-six.vercel.app"
 ];
 
+// ✅ CORS CONFIG (PRODUCTION SAFE)
 app.use(cors({
   origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
+    // allow mobile apps / postman / server-to-server
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
     }
+
+    return callback(new Error("Not allowed by CORS"));
   },
-  credentials: true
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
 }));
 
+// ✅ preflight requests fix
+app.options("*", cors());
+
+// Routes
 const authRouter = require("./routes/auth.routes");
 const interviewRouter = require("./routes/interview.routes");
 
