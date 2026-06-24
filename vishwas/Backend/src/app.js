@@ -4,17 +4,15 @@ const cors = require("cors");
 
 const app = express();
 
-app.use(express.json());
-app.use(cookieParser());
-
 // FRONTEND URLS
 const allowedOrigins = [
   "http://localhost:5173",
   "https://vishwas-project-final.vercel.app",
-  "https://vishwas-six.vercel.app"
+  "https://vishwas-six.vercel.app",
+  "https://vishwas-project-final-git-main-vishaws.vercel.app" // ← add this
 ];
 
-// CORS
+// CORS — must be FIRST
 const corsOptions = {
   origin: function (origin, callback) {
     if (!origin) return callback(null, true);
@@ -32,14 +30,10 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+app.options("*", cors(corsOptions)); // ← let cors() handle preflight, not your manual handler
 
-// ✅ SAFE PRE-FLIGHT HANDLER
-app.use((req, res, next) => {
-  if (req.method === "OPTIONS") {
-    return res.sendStatus(200);
-  }
-  next();
-});
+app.use(express.json());
+app.use(cookieParser());
 
 // ROUTES
 const authRouter = require("./routes/auth.routes");
