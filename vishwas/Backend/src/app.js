@@ -7,33 +7,41 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
+// FRONTEND URLS
 const allowedOrigins = [
   "http://localhost:5173",
   "https://vishwas-project-final.vercel.app",
-  "https://vishwas-six.vercel.app",
-  "https://*.vercel.app"
+  "https://vishwas-six.vercel.app"
 ];
 
+// CORS
 const corsOptions = {
   origin: function (origin, callback) {
     if (!origin) return callback(null, true);
 
-    if (allowedOrigins.includes(origin)) {
+    if (
+      allowedOrigins.includes(origin) ||
+      origin.endsWith(".vercel.app")
+    ) {
       return callback(null, true);
     }
 
-    return callback(null, true); // safer for debugging
+    return callback(new Error("Not allowed by CORS"));
   },
-  credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"]
+  credentials: true
 };
 
-// CORS middleware
 app.use(cors(corsOptions));
-app.options(cors(corsOptions));
 
-// Routes
+// ✅ SAFE PRE-FLIGHT HANDLER
+app.use((req, res, next) => {
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(200);
+  }
+  next();
+});
+
+// ROUTES
 const authRouter = require("./routes/auth.routes");
 const interviewRouter = require("./routes/interview.routes");
 
