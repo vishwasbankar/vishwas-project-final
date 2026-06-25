@@ -1,3 +1,4 @@
+import "./login.css"
 import React,{useState} from 'react'
 import { useNavigate, Link } from 'react-router'
 import "../auth.form.scss"

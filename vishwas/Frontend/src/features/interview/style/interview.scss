@@ -477,3 +477,101 @@ $severity-low: #3fb950;
         border-color: rgba($severity-low, 0.25);
     }
 }
+
+/* ===============================
+   RESPONSIVE FIX (345px × 667px)
+   =============================== */
+
+@media screen and (max-width: 768px) {
+    .interview-layout {
+        flex-direction: column;
+    }
+
+    .interview-divider {
+        width: 100%;
+        height: 1px;
+    }
+
+    .interview-nav,
+    .interview-sidebar,
+    .interview-content {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+    }
+
+    .interview-content {
+        max-height: none;
+        overflow-y: visible;
+    }
+}
+
+@media screen and (max-width: 345px) {
+
+    html,
+    body {
+        overflow-x: hidden;
+    }
+
+    .interview-page {
+        padding: 0.5rem;
+        overflow-x: hidden;
+    }
+
+    .interview-nav,
+    .interview-content,
+    .interview-sidebar {
+        padding: 0.75rem;
+    }
+
+    .content-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .q-card,
+    .roadmap-day,
+    .skill-tag {
+        min-width: 0;
+        max-width: 100%;
+    }
+
+    .q-card__question,
+    .roadmap-day__focus,
+    .roadmap-day__tasks li {
+        word-break: break-word;
+        overflow-wrap: break-word;
+    }
+
+    .roadmap-list::before {
+        left: 18px;
+    }
+
+    .roadmap-day {
+        padding-left: 2.5rem;
+    }
+
+    .roadmap-day::before {
+        left: 12px;
+        width: 12px;
+        height: 12px;
+    }
+
+    .match-score__ring {
+        width: 70px;
+        height: 70px;
+    }
+
+    .match-score__value {
+        font-size: 1.2rem;
+    }
+
+    img,
+    svg,
+    video,
+    canvas {
+        max-width: 100%;
+        height: auto;
+    }
+}

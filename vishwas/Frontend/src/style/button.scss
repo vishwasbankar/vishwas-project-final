@@ -1,5 +1,4 @@
-.button{
-
+.button {
     border: none;
     outline: none;
     padding-inline: 1.5rem;
@@ -7,14 +6,64 @@
     border-radius: 1rem;
     cursor: pointer;
 
-    transition: all 0.3s ease-in-out;
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 600;
 
-    &.primary-button{
-        background-color: #e1034d;
-        color: white;
+    transition: all 0.25s ease-in-out;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+
+    &:active {
+        transform: scale(0.95);
     }
 
-    &:active{
-        transform: scale(0.9);
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
+    }
+
+    // ── PRIMARY BUTTON ─────────────────────────────────────────────
+    &.primary-button {
+        background-color: #e1034d;
+        color: white;
+        box-shadow: 0 6px 18px rgba(225, 3, 77, 0.25);
+
+        &:hover {
+            background-color: darken(#e1034d, 5%);
+            transform: translateY(-1px);
+        }
+    }
+
+    // ── SECONDARY BUTTON (optional but useful) ──────────────────────
+    &.secondary-button {
+        background-color: transparent;
+        color: #e6edf3;
+        border: 1px solid #2a3348;
+
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-color: #ff2d78;
+            color: #ff2d78;
+        }
+    }
+
+    // ── FULL WIDTH ON MOBILE ────────────────────────────────────────
+    @media (max-width: 768px) {
+        width: 100%;
+        border-radius: 0.75rem;
+    }
+
+    // ── SMALL MOBILE ADJUSTMENT ─────────────────────────────────────
+    @media (max-width: 480px) {
+        font-size: 0.85rem;
+        padding-inline: 1rem;
+        padding-block: 0.65rem;
     }
 }
